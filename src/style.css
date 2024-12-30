@@ -6,6 +6,26 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
+  
+  --standard-font-size: 0.8rem;
+  --standard-font-color: #fff;
+  --standard-icon-width: 2vmin;
+  
+  /* Label Series */
+  --input-field-padding: min(7px, 1vh) min(10px, 1vw);
+  --input-border-radius: 3px;
+  --error-font-size: 1.2vmin;
+  --labelSeries-dp-input-padding: 3.5vmin; /* date picker use */
+  --labelSeries-dp-input-icon-padding: 1.2vmin; /* date picker use */
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  box-sizing: border-box;
+  font-size: var(--standard-font-size);
+  color: var(--standard-font-color);
 }
 
 a {
@@ -20,22 +40,23 @@ li {
 
 body {
   margin: 0;
+  padding: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
   font-size: 2.6em;
   line-height: 1.1;
+  padding: 0;
+  margin: 0;
 }
 
-#app {
-  width: 100%;
-  height: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  text-align: center;
-  box-sizing: border-box;
+::-webkit-scrollbar {
+  width: 2px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b4b4b4;
+  border-radius: 5px;
 }

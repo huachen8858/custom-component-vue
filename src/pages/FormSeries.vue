@@ -1,0 +1,230 @@
+<template>
+  <div class="page-body">
+    <div class="heading">
+      <h4 class="title">Form Series Components</h4>
+    </div>
+    <div class="container">
+      <!-- Custom Input -->
+      <div class="customInput-wrapper">
+        <CustomInput
+          v-model="content"
+          label="Label (10 characters)"
+          :errorHandler="{
+            reg: regex,
+            msg: message,
+          }"
+          :instant-check="instantcheck"
+          :required="true"
+          :disabled="false"
+          :placeholder="'I am placeholder'"
+        />
+      </div>
+
+      <!-- Custom Dropdown -->
+      <div class="customDropdown-wrapper">
+        <CustomDropdown
+          v-model="gender"
+          label="Gender"
+          :options="genderOptions"
+        />
+      </div>
+
+      <!-- Custom Datepicker -->
+      <div class="customDatepicker-wrapper">
+        <CustomDatepicker
+          label="Date"
+          v-model="selectedDate"
+          :disabledDates="disabledDates"
+        />
+      </div>
+
+      <!-- Custom Datepicker (Default null) -->
+      <div class="customDatepicker-wrapper">
+        <CustomDatepicker
+          label="Date(Default null)"
+          v-model="defaultNullDate"
+          :disabledDates="disabledDates"
+          :required="true"
+          :instant-check="instantcheck"
+        />
+      </div>
+    </div>
+    <div class="container">
+      <!-- CustomInput - password -->
+      <div class="customInput-wrapper">
+        <CustomInput
+          v-model="password"
+          label="Password"
+          :type="'password'"
+          :instant-check="instantcheck"
+          :errorHandler="{
+            reg: passwordRegex,
+            msg: passwordMsg,
+          }"
+          :required="true"
+          :disabled="false"
+        />
+      </div>
+
+      <!-- CustomInput - number -->
+      <div class="customInput-wrapper">
+        <CustomInput
+          v-model="number"
+          label="Number"
+          :type="'number'"
+          :instant-check="instantcheck"
+          :required="false"
+          :disabled="false"
+          :minNumber="0"
+          :maxNumber="100"
+        />
+      </div>
+
+      <!-- CustomInput - email -->
+      <div class="customInput-wrapper">
+        <CustomInput
+          v-model="email"
+          label="Email"
+          :errorHandler="{
+            reg: emailRegex,
+            msg: emailMessage,
+          }"
+          :instant-check="instantcheck"
+          :required="true"
+          :disabled="false"
+        />
+      </div>
+
+      <!-- CustomInput - Input Search -->
+      <div class="customInput-wrapper">
+        <CustomInput
+          v-model="name"
+          label="Sales (enter 'L' will show results)"
+          :instant-check="instantcheck"
+          :required="true"
+          :disabled="false"
+          :keyWordSearch="true"
+          :searchSrcData="contactPersonList"
+        />
+      </div>
+    </div>
+    <div class="container">
+      <button class="save-btn" @click="toggleInstantCheck()">Save</button>
+      <span>
+        * The save button is to simulate the field checking function when
+        sending the form
+      </span>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { onMounted, ref } from "vue";
+import CustomInput from "../components/CustomInput.vue";
+import CustomDatepicker from "../components/CustomDatepicker.vue";
+import CustomDropdown from "../components/CustomDropdown.vue";
+import dayjs from "dayjs";
+
+let content = ref("");
+const regex = ref(/^.{1,10}$/);
+const message = ref("Please enter no more than 10 characters");
+
+const testDate = ref(new Date());
+const selectedDate = ref(null);
+const defaultNullDate = ref(null);
+
+let gender = ref("Male"); // Default value
+const genderOptions = ref(["Male", "Female"]); // Dropdown options
+
+let password = ref("");
+const passwordRegex = ref(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{8,20}$/);
+let passwordMsg = ref(
+  "Invalid Format. Password must contain at least one uppercase letter, one lowercase letter, one digit, and be between 8 and 20 characters long."
+);
+
+let email = ref("");
+const emailRegex = ref(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+const emailMessage = ref("Invalid Email");
+
+let number = ref(0);
+
+let name = ref("");
+
+const contactPersonList = ref([
+  "Lisa Wang",
+  "Lisa Li",
+  "Lisa Cheung",
+  "Lily Huang",
+]);
+
+let instantcheck = ref(false);
+
+const disabledDates = (date) => {
+  if (dayjs(date).isBefore("2024-11-25", "day")) {
+    return true;
+  }
+  return false;
+};
+
+const toggleInstantCheck = () => {
+  instantcheck.value = !instantcheck.value;
+};
+
+onMounted(() => {
+  selectedDate.value = dayjs(testDate.value, "YYYY/MM/DD");
+});
+</script>
+
+<style scoped>
+.page-body {
+  width: 100%;
+  height: 94%;
+}
+
+.heading {
+  width: 90%;
+  height: 10%;
+  margin: 2% 5%;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.container {
+  padding: 2% 5%;
+  display: flex;
+  gap: 5%;
+}
+
+.customInput-wrapper {
+  width: 15vw;
+}
+
+.customDatepicker-wrapper {
+  width: 15vw;
+}
+
+.customDropdown-wrapper {
+  width: 15vw;
+}
+
+.save-btn {
+  width: 10vw;
+  padding: 0.8vh 0.8vw;
+  background-color: #d4d4d4;
+  border: #d4d4d4 1px solid;
+  border-radius: 3px;
+  color: #656565;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.save-btn:hover {
+  background-color: #d4d4d4;
+  color: #656565;
+  box-shadow: 4px 4px 10px rgba(120, 120, 120, 0.5);
+}
+</style>

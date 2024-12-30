@@ -1,21 +1,21 @@
 <template>
-  <div>
+  <div class="home">
     <section class="heading">
       <h1>Custom Components</h1>
     </section>
     <section class="component-section">
       <div class="list-container">
         <div class="list-item">
-          <a href="/">Custom Input</a>
+          <a href="/form-series">Custom Input</a>
         </div>
         <div class="list-item">
-          <a href="/">Custom Dropdown</a>
+          <a href="/form-series">Custom Dropdown</a>
         </div>
         <div class="list-item">
-          <a href="/">Custom Datepicker</a>
+          <a href="/form-series">Custom Datepicker</a>
         </div>
         <div class="list-item">
-          <a href="/">Custom Timepicker</a>
+          <a href="/form-series">Custom Timepicker</a>
         </div>
         <div class="list-item">
           <a href="/">Custom Table</a>
@@ -28,9 +28,17 @@
 <script setup></script>
 
 <style scoped>
+.home {
+  width: 100%;
+  height: 100%;
+}
+
 .heading {
   width: 100%;
-  height: 10%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .component-section {
@@ -38,7 +46,6 @@
   height: 70%;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .list-item {
