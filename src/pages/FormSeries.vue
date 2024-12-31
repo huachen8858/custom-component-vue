@@ -215,7 +215,7 @@ onMounted(() => {
   background-color: #d4d4d4;
   border: #d4d4d4 1px solid;
   border-radius: 3px;
-  color: #656565;
+  color: #292929;
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -224,7 +224,7 @@ onMounted(() => {
 
 .save-btn:hover {
   background-color: #d4d4d4;
-  color: #656565;
+  color: #292929;
   box-shadow: 4px 4px 10px rgba(120, 120, 120, 0.5);
 }
 </style>
