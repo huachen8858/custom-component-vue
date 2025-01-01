@@ -7,7 +7,7 @@
       <!-- Custom Input -->
       <div class="customInput-wrapper">
         <CustomInput
-          v-model="content"
+          v-model="name"
           label="Name (allow 10 characters)"
           :errorHandler="{
             reg: regex,
@@ -31,7 +31,12 @@
 
       <!-- Custom Datepicker -->
       <div class="customDatepicker-wrapper">
-        <CustomDatepicker label="Date of Birth" v-model="selectedDate" />
+        <CustomDatepicker
+          label="Date of Birth"
+          v-model="selectedDate"
+          :disabled="false"
+          :required="true"
+        />
       </div>
 
       <!-- CustomInput - email -->
@@ -91,7 +96,7 @@
       <!-- CustomInput - Input Search -->
       <div class="customInput-wrapper">
         <CustomInput
-          v-model="name"
+          v-model="sales"
           label="Sales (enter 'L' will show results)"
           :instant-check="instantcheck"
           :required="true"
@@ -102,12 +107,13 @@
       </div>
     </div>
     <div class="container">
-      <button class="save-btn" @click="toggleInstantCheck()">Save</button>
+      <button class="save-btn" @click="save()">Save</button>
       <span>
         * The save button is to simulate the field checking function when
         sending the form
       </span>
     </div>
+    <div class="container">Result: {{ result }}</div>
   </div>
 </template>
 
@@ -119,12 +125,12 @@ import CustomTimepicker from "../components/CustomTimepicker.vue";
 import CustomDropdown from "../components/CustomDropdown.vue";
 import dayjs from "dayjs";
 
-let content = ref("");
+let name = ref("");
 const regex = ref(/^.{1,10}$/);
 const message = ref("Please enter no more than 10 characters");
 
 const testDate = ref(new Date());
-const selectedDate = ref(null);
+const selectedDate = ref(new Date());
 const selectedTime = ref({ hours: 11, minutes: 0, seconds: 0 });
 const defaultNullDate = ref(null);
 
@@ -141,7 +147,7 @@ let email = ref("");
 const emailRegex = ref(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 const emailMessage = ref("Invalid Email");
 
-let name = ref("");
+let sales = ref("");
 
 const contactPersonList = ref([
   "Lisa Wang",
@@ -152,8 +158,15 @@ const contactPersonList = ref([
 
 let instantcheck = ref(false);
 
+const result = ref({});
+
+// Disable 10 day of current month
 const disabledDates = (date) => {
-  if (dayjs(date).isBefore("2024-11-25", "day")) {
+  const today = dayjs();
+  const currentMonth = today.month();
+  const tenthDayOfMonth = dayjs().month(currentMonth).date(10);
+
+  if (dayjs(date).isBefore(tenthDayOfMonth, "day")) {
     return true;
   }
   return false;
@@ -166,13 +179,26 @@ const disabledTime = (time) => {
   return false;
 };
 
-const toggleInstantCheck = () => {
-  instantcheck.value = !instantcheck.value;
-};
+const save = () => {
+  instantcheck.value = true;
 
-onMounted(() => {
-  selectedDate.value = dayjs(testDate.value, "YYYY/MM/DD");
-});
+  const formattedTime = dayjs()
+    .set("hour", selectedTime.value.hours)
+    .set("minute", selectedTime.value.minutes)
+    .set("second", selectedTime.value.seconds)
+    .format("HH:mm");
+
+  result.value = {
+    name: name.value,
+    gender: gender.value,
+    dateOfBirth: dayjs(selectedDate.value).format("YYYY/MM/DD"),
+    email: email.value,
+    password: password.value,
+    time: formattedTime,
+    date: defaultNullDate.value,
+    sales: sales.value,
+  };
+};
 </script>
 
 <style scoped>

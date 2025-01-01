@@ -25,8 +25,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import dayjs from "dayjs";
+import { ref, watch } from "vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
 const selectedTime = defineModel();

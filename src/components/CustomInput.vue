@@ -293,7 +293,7 @@ defineExpose({
 
 <style lang="css" scoped>
 ::placeholder {
-  color: #d4d4d4;
+  color: #9d9d9d;
   font-size: var(--standard-font-size);
 }
 
@@ -368,7 +368,7 @@ input[type="text"]:disabled {
   font-size: var(--error-font-size);
   margin: 0 0 0 1%;
   height: 1rem;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   margin-top: 0.5%;
 }
 

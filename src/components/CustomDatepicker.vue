@@ -5,7 +5,7 @@
       v-model="selectedDate"
       :class="showErrorMessage ? 'datepicker-error' : 'datepicker'"
       type="date"
-      :teleport="true"
+      :teleport="false"
       :enable-time-picker="false"
       :format="(date) => formatDate(date)"
       :disabled="props.disabled"
@@ -36,7 +36,7 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    default: "DD/MM/YYYY",
+    default: "YYYY/MM/DD",
   },
   disabled: {
     type: Boolean,
@@ -44,7 +44,7 @@ const props = defineProps({
   },
   disabledDates: {
     type: Function,
-    default: () => false,
+    default: () => true,
   },
   required: {
     type: Boolean,
@@ -60,7 +60,7 @@ let showErrorMessage = ref(false);
 let errorMessage = ref("Required field");
 
 const formatDate = (date) => {
-  let newDate = dayjs(date).format("DD/MM/YYYY");
+  let newDate = dayjs(date).format("YYYY/MM/DD");
   if (newDate === "Invalid Date") {
     newDate = null;
   }
