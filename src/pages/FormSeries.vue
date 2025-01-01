@@ -8,7 +8,7 @@
       <div class="customInput-wrapper">
         <CustomInput
           v-model="content"
-          label="Label (10 characters)"
+          label="Name (allow 10 characters)"
           :errorHandler="{
             reg: regex,
             msg: message,
@@ -31,21 +31,21 @@
 
       <!-- Custom Datepicker -->
       <div class="customDatepicker-wrapper">
-        <CustomDatepicker
-          label="Date"
-          v-model="selectedDate"
-          :disabledDates="disabledDates"
-        />
+        <CustomDatepicker label="Date of Birth" v-model="selectedDate" />
       </div>
 
-      <!-- Custom Datepicker (Default null) -->
-      <div class="customDatepicker-wrapper">
-        <CustomDatepicker
-          label="Date(Default null)"
-          v-model="defaultNullDate"
-          :disabledDates="disabledDates"
-          :required="true"
+      <!-- CustomInput - email -->
+      <div class="customInput-wrapper">
+        <CustomInput
+          v-model="email"
+          label="Email"
+          :errorHandler="{
+            reg: emailRegex,
+            msg: emailMessage,
+          }"
           :instant-check="instantcheck"
+          :required="true"
+          :disabled="false"
         />
       </div>
     </div>
@@ -66,32 +66,25 @@
         />
       </div>
 
-      <!-- CustomInput - number -->
-      <div class="customInput-wrapper">
-        <CustomInput
-          v-model="number"
-          label="Number"
-          :type="'number'"
+      <!-- Custom Timepicker -->
+      <div class="customTimepicker-wrapper">
+        <CustomTimepicker
+          label="Time (allow 9~12 am)"
+          v-model="selectedTime"
+          :disabledTimes="disabledTime"
+          :required="true"
           :instant-check="instantcheck"
-          :required="false"
-          :disabled="false"
-          :minNumber="0"
-          :maxNumber="100"
         />
       </div>
 
-      <!-- CustomInput - email -->
-      <div class="customInput-wrapper">
-        <CustomInput
-          v-model="email"
-          label="Email"
-          :errorHandler="{
-            reg: emailRegex,
-            msg: emailMessage,
-          }"
-          :instant-check="instantcheck"
+      <!-- Custom Datepicker (Default null) -->
+      <div class="customDatepicker-wrapper">
+        <CustomDatepicker
+          label="Date(Default null)"
+          v-model="defaultNullDate"
+          :disabledDates="disabledDates"
           :required="true"
-          :disabled="false"
+          :instant-check="instantcheck"
         />
       </div>
 
@@ -122,6 +115,7 @@
 import { onMounted, ref } from "vue";
 import CustomInput from "../components/CustomInput.vue";
 import CustomDatepicker from "../components/CustomDatepicker.vue";
+import CustomTimepicker from "../components/CustomTimepicker.vue";
 import CustomDropdown from "../components/CustomDropdown.vue";
 import dayjs from "dayjs";
 
@@ -131,6 +125,7 @@ const message = ref("Please enter no more than 10 characters");
 
 const testDate = ref(new Date());
 const selectedDate = ref(null);
+const selectedTime = ref({ hours: 11, minutes: 0, seconds: 0 });
 const defaultNullDate = ref(null);
 
 let gender = ref("Male"); // Default value
@@ -146,8 +141,6 @@ let email = ref("");
 const emailRegex = ref(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 const emailMessage = ref("Invalid Email");
 
-let number = ref(0);
-
 let name = ref("");
 
 const contactPersonList = ref([
@@ -161,6 +154,13 @@ let instantcheck = ref(false);
 
 const disabledDates = (date) => {
   if (dayjs(date).isBefore("2024-11-25", "day")) {
+    return true;
+  }
+  return false;
+};
+
+const disabledTime = (time) => {
+  if (time.hours < 9 || time.hours >= 12) {
     return true;
   }
   return false;
@@ -194,17 +194,12 @@ onMounted(() => {
 .container {
   padding: 2% 5%;
   display: flex;
-  gap: 5%;
+  gap: 3%;
 }
 
-.customInput-wrapper {
-  width: 15vw;
-}
-
-.customDatepicker-wrapper {
-  width: 15vw;
-}
-
+.customInput-wrapper,
+.customDatepicker-wrapper,
+.customTimepicker-wrapper,
 .customDropdown-wrapper {
   width: 15vw;
 }
