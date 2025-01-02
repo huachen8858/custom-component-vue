@@ -1,4 +1,20 @@
 <template>
+  <!-- Warning Popup (API Result) -->
+  <CustomModal
+    :visible="showAPIResult"
+    :key="showAPIResult"
+    :title="APIResultTitle"
+    :width="30"
+    :height="25"
+    :footer="true"
+    @cancel="handleRefresh"
+    @ok="handleRefresh"
+  >
+    <div>
+      {{ APIResultMsg }}
+    </div>
+  </CustomModal>
+
   <div class="page-body">
     <div class="heading">
       <h4 class="title">Form Series Components</h4>
@@ -7,6 +23,7 @@
       <!-- Custom Input -->
       <div class="customInput-wrapper">
         <CustomInput
+          ref="nameRef"
           v-model="name"
           label="Name (allow 10 characters)"
           :errorHandler="{
@@ -23,6 +40,7 @@
       <!-- Custom Dropdown -->
       <div class="customDropdown-wrapper">
         <CustomDropdown
+          ref="genderRef"
           v-model="gender"
           label="Gender"
           :options="genderOptions"
@@ -32,6 +50,7 @@
       <!-- Custom Datepicker -->
       <div class="customDatepicker-wrapper">
         <CustomDatepicker
+          ref="dateRef"
           label="Date of Birth"
           v-model="selectedDate"
           :disabled="false"
@@ -42,6 +61,7 @@
       <!-- CustomInput - email -->
       <div class="customInput-wrapper">
         <CustomInput
+          ref="emailRef"
           v-model="email"
           label="Email"
           :errorHandler="{
@@ -58,6 +78,7 @@
       <!-- CustomInput - password -->
       <div class="customInput-wrapper">
         <CustomInput
+          ref="passwordRef"
           v-model="password"
           label="Password"
           :type="'password'"
@@ -74,6 +95,7 @@
       <!-- Custom Timepicker -->
       <div class="customTimepicker-wrapper">
         <CustomTimepicker
+          ref="timeRef"
           label="Time (allow 9~12 am)"
           v-model="selectedTime"
           :disabledTimes="disabledTime"
@@ -85,7 +107,8 @@
       <!-- Custom Datepicker (Default null) -->
       <div class="customDatepicker-wrapper">
         <CustomDatepicker
-          label="Date(Default null)"
+          ref="defaultNullDateRef"
+          label="Date (Default null)"
           v-model="defaultNullDate"
           :disabledDates="disabledDates"
           :required="true"
@@ -96,6 +119,7 @@
       <!-- CustomInput - Input Search -->
       <div class="customInput-wrapper">
         <CustomInput
+          ref="salesRef"
           v-model="sales"
           label="Sales (enter 'L' will show results)"
           :instant-check="instantcheck"
@@ -106,47 +130,60 @@
         />
       </div>
     </div>
-    <div class="container">
+    <div class="btn-container">
       <button class="save-btn" @click="save()">Save</button>
       <span>
         * The save button is to simulate the field checking function when
         sending the form
       </span>
     </div>
-    <div class="container">Result: {{ result }}</div>
+    <div class="container">
+      Result:
+      <pre><code>{{ result }}</code></pre>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import CustomInput from "../components/CustomInput.vue";
 import CustomDatepicker from "../components/CustomDatepicker.vue";
 import CustomTimepicker from "../components/CustomTimepicker.vue";
 import CustomDropdown from "../components/CustomDropdown.vue";
+import CustomModal from "../components/CustomModal.vue";
 import dayjs from "dayjs";
 
+const nameRef = ref(null);
 let name = ref("");
 const regex = ref(/^.{1,10}$/);
 const message = ref("Please enter no more than 10 characters");
 
-const testDate = ref(new Date());
-const selectedDate = ref(new Date());
-const selectedTime = ref({ hours: 11, minutes: 0, seconds: 0 });
-const defaultNullDate = ref(null);
-
+const genderRef = ref(null);
 let gender = ref("Male"); // Default value
 const genderOptions = ref(["Male", "Female"]); // Dropdown options
 
+const dateRef = ref(null);
+const selectedDate = ref(new Date());
+
+const emailRef = ref(null);
+let email = ref("");
+const emailRegex = ref(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+const emailMessage = ref("Invalid Email");
+
+const passwordRef = ref(null);
 let password = ref("");
 const passwordRegex = ref(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d]{8,20}$/);
 let passwordMsg = ref(
   "Invalid Format. Password must contain at least one uppercase letter, one lowercase letter, one digit, and be between 8 and 20 characters long."
 );
 
-let email = ref("");
-const emailRegex = ref(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-const emailMessage = ref("Invalid Email");
+const timeRef = ref(null);
+const selectedTime = ref({ hours: 11, minutes: 0, seconds: 0 });
 
+const defaultNullDateRef = ref(null);
+const defaultNullDate = ref(null);
+
+const salesRef = ref(null);
 let sales = ref("");
 
 const contactPersonList = ref([
@@ -159,6 +196,17 @@ const contactPersonList = ref([
 let instantcheck = ref(false);
 
 const result = ref({});
+
+// Warning popup Use (API result)
+const showAPIResult = ref(false);
+const APIResultTitle = ref("");
+const APIResultMsg = ref("");
+
+const handleRefresh = () => {
+  showAPIResult.value = false;
+  APIResultTitle.value = "";
+  APIResultMsg.value = "";
+};
 
 // Disable 10 day of current month
 const disabledDates = (date) => {
@@ -181,6 +229,38 @@ const disabledTime = (time) => {
 
 const save = () => {
   instantcheck.value = true;
+
+  console.log("nameRef", nameRef.value.showErrorMessage);
+  if (
+    name.value == "" ||
+    selectedDate.value == "" ||
+    email.value == "" ||
+    password.value == "" ||
+    selectedTime.value == "" ||
+    defaultNullDate.value == "" ||
+    sales.value == ""
+  ) {
+    showAPIResult.value = true;
+    APIResultTitle.value = "Warning";
+    APIResultMsg.value = "Some fields is empty";
+    return;
+  }
+
+  if (
+    nameRef.value.showErrorMessage ||
+    genderRef.value.showErrorMessage ||
+    dateRef.value.showErrorMessage ||
+    emailRef.value.showErrorMessage ||
+    passwordRef.value.showErrorMessage ||
+    timeRef.value.showErrorMessage ||
+    defaultNullDateRef.value.showErrorMessage ||
+    salesRef.value.showErrorMessage
+  ) {
+    showAPIResult.value = true;
+    APIResultTitle.value = "Warning";
+    APIResultMsg.value = "Some fields validation failed";
+    return;
+  }
 
   const formattedTime = dayjs()
     .set("hour", selectedTime.value.hours)
@@ -218,9 +298,18 @@ const save = () => {
 }
 
 .container {
-  padding: 2% 5%;
+  height: 15%;
+  padding: 0 5%;
   display: flex;
   gap: 3%;
+}
+
+.btn-container {
+  height: 15%;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 4%;
 }
 
 .customInput-wrapper,
@@ -232,6 +321,7 @@ const save = () => {
 
 .save-btn {
   width: 10vw;
+  height: fit-content;
   padding: 0.8vh 0.8vw;
   background-color: #d4d4d4;
   border: #d4d4d4 1px solid;
@@ -241,6 +331,7 @@ const save = () => {
   cursor: pointer;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease;
+  margin-bottom: 1%;
 }
 
 .save-btn:hover {
