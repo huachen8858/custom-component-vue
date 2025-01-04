@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import FormSeriesPage from "../pages/FormSeries.vue";
+import CustomTablePage from "../pages/CustomTablePage.vue";
 
-export var routes = [
+export const routes = [
   {
     path: "/",
     name: "HomePage",
@@ -12,6 +13,11 @@ export var routes = [
     path: "/form-series",
     name: "FormSeries",
     component: FormSeriesPage,
+  },
+  {
+    path: "/custom-table",
+    name: "CustomTablePage",
+    component: CustomTablePage,
   },
 ];
 

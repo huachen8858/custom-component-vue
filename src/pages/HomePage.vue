@@ -9,7 +9,7 @@
           <a href="/form-series">Form Series Components</a>
         </div>
         <div class="list-item">
-          <a href="/">Custom Table</a>
+          <a href="/custom-table">Custom Table</a>
         </div>
       </div>
     </section>
