@@ -1,5 +1,28 @@
-# Vue 3 + Vite
+Customizable components designed for diverse use cases across various projects.
 
+** Key Components:
+- Form Series Components
+A suite of form-related components that simplify and enhance user input processes:
+
+1. Custom Input: Allow setting Regex for validation.
+2. Custom Dropdown
+3. Custom Datepicker
+4. Custom Timepicker
+5. Custom Modal: A customizable modal dialog for alerts, forms, or other interactive content.
+
+- CustomTable
+1. Supports pagination enable or disable.
+2. Event Emmition: Emits key events for better interactivity and control. Ex: edit, delete, row data clicked
+3. Column Width Customization: Provides the flexibility to set custom column widths, ensuring the table layout adapts to your data and design preferences.
+
+
+** Use Cases:
+1. Form Pages: Enhance user experience with tailored input components.
+2. Data Management: Display and manage large datasets effortlessly.
+3. Dynamic Data Management: Interactive data tables for CRUD operations.
+
+------
+# Vue 3 + Vite
 This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
 Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
