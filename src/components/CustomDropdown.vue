@@ -103,7 +103,6 @@ onBeforeUnmount(() => {
 }
 
 .dropdown-field {
-  width: 86%;
   padding: var(--input-field-padding);
   background-color: #242424;
   border: 1px solid #ebebeb;
