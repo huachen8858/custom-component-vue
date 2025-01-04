@@ -6,16 +6,7 @@
     <section class="component-section">
       <div class="list-container">
         <div class="list-item">
-          <a href="/form-series">Custom Input</a>
-        </div>
-        <div class="list-item">
-          <a href="/form-series">Custom Dropdown</a>
-        </div>
-        <div class="list-item">
-          <a href="/form-series">Custom Datepicker</a>
-        </div>
-        <div class="list-item">
-          <a href="/form-series">Custom Timepicker</a>
+          <a href="/form-series">Form Series Components</a>
         </div>
         <div class="list-item">
           <a href="/">Custom Table</a>
@@ -57,6 +48,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1rem;
 }
 
 .list-item:hover {

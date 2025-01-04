@@ -1,5 +1,5 @@
 <template>
-  <!-- Warning Popup (API Result) -->
+  <!-- Custom Modal -->
   <CustomModal
     :visible="showAPIResult"
     :key="showAPIResult"
@@ -18,6 +18,7 @@
   <div class="page-body">
     <div class="heading">
       <h4 class="title">Form Series Components</h4>
+      <p>Form series components include "Custom Input", "Custom Dropdown", "Custom Datepicker", "Custom Timepicker", "Custom Modal", which can be used in common form filling pages.</p>
     </div>
     <div class="container">
       <!-- Custom Input -->
@@ -289,12 +290,13 @@ const save = () => {
 
 .heading {
   width: 90%;
-  height: 10%;
+  height: 15%;
   margin: 2% 5%;
 }
 
 .title {
   font-size: 2rem;
+  margin-bottom: 1%;
 }
 
 .container {
